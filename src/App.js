@@ -14,6 +14,7 @@ import MyReviews from "./Pages/DashBoard/MyReviews";
 import MyAppointment from "./Pages/DashBoard/MyAppointment";
 import MyHistory from "./Pages/DashBoard/MyHistory";
 import Users from "./Pages/DashBoard/Users";
+import RequireAdmin from "./Pages/Login/RequireAdmin";
 function App() {
   return (
     <div className="max-w-7xl p-12 mx-auto">
@@ -41,7 +42,14 @@ function App() {
           <Route index element={<MyAppointment />}></Route>
           <Route path="reviews" element={<MyReviews />}></Route>
           <Route path="history" element={<MyHistory />}></Route>
-          <Route path="users" element={<Users />}></Route>
+          <Route
+            path="users"
+            element={
+              <RequireAdmin>
+                <Users />
+              </RequireAdmin>
+            }
+          ></Route>
         </Route>
         <Route path="/login" element={<MyLogin></MyLogin>}></Route>
         <Route path="/signup" element={<MySignUp></MySignUp>}></Route>
