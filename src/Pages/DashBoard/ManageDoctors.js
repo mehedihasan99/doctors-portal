@@ -1,16 +1,15 @@
 import React from "react";
 import { useQuery } from "react-query";
 import Loading from "../Shared/Loading";
-import UserRow from "./UserRow";
+import DoctorRow from "./DoctorRow";
 
-const Users = () => {
+const ManageDoctors = () => {
   const {
-    data: users,
+    data: doctors,
     isLoading,
     refetch,
-  } = useQuery("users", () =>
-    fetch("https://fathomless-gorge-92385.herokuapp.com/user", {
-      method: "GET",
+  } = useQuery("doctors", () =>
+    fetch("http://localhost:5000/doctor", {
       headers: {
         authorization: `Bearer ${localStorage.getItem("accessToken")}`,
       },
@@ -21,20 +20,26 @@ const Users = () => {
   }
   return (
     <div>
-      <h2>All users:{users.length}</h2>
+      <h3 className="text-3xl"> Manage Doctors: {doctors.length}</h3>
       <div class="overflow-x-auto">
         <table class="table w-full">
           <thead>
             <tr>
               <th></th>
+              <th>Avatar</th>
               <th>Name</th>
-              <th>Job</th>
-              <th>Favorite Color</th>
+              <th>Specialty</th>
+              <th>Action</th>
             </tr>
           </thead>
           <tbody>
-            {users.map((user) => (
-              <UserRow key={user._id} user={user} refetch={refetch}></UserRow>
+            {doctors.map((doctor, index) => (
+              <DoctorRow
+                key={doctor._id}
+                doctor={doctor}
+                index={index}
+                refetch={refetch}
+              ></DoctorRow>
             ))}
           </tbody>
         </table>
@@ -43,4 +48,4 @@ const Users = () => {
   );
 };
 
-export default Users;
+export default ManageDoctors;
